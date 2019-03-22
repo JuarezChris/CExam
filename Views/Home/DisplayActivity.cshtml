@@ -1,0 +1,75 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+    crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" media="screen" href="~/css/styling.css" />
+@model Active
+
+
+<a class="btn btn-primary" href="../Home">Home</a>
+<a class="btn btn-primary" href="../logout">Log Off</a>
+<h1>@Model.Title</h1>
+<h2>Event Coordinator:
+                
+           
+                @foreach(var z in @ViewBag.AllUsers)
+                {
+                    @if(z.UserId == @Model.ActivityPlanner)
+                    {
+                        <p>@z.FirstName</p>
+                    }
+                }
+              </h2>
+<h2>Date: @Model.ActivityDate</h2>
+<h2>Description: @Model.Description</h2>
+<h2>Guests</h2>
+
+@foreach(var x in @Model.JoinList)
+{
+<ul>
+    <li>@x.User.FirstName</li>
+</ul>
+}
+
+
+
+
+
+
+                
+           
+                    
+                    @if(@Model.ActivityPlanner == @ViewBag.User)
+                    {
+                    <form action="../Delete/@Model.ActivityId" method="post">
+                        <button type="submit" class="btn btn-success">Delete</button>
+                    </form>
+                    }
+                    else
+                    {
+                        bool going = false;
+                         @foreach (var y in @Model.JoinList)
+                    {
+                        
+                        
+                        @if(@ViewBag.User == y.User.UserId)
+                        {
+                            going = true;
+                        }
+                    }
+                        @if(going == true)
+                        {
+                        <form action="../leave/@Model.ActivityId" method="post">
+                        <button type="submit" class="btn btn-success">Leave</button>
+                        </form>
+                        }
+                        else
+                        {
+                        <form action="../join/@Model.ActivityId/@ViewBag.name.UserId" method="post">
+                        <button type="submit" class="btn btn-success">Join</button>
+                        </form>
+                        }
+                    
+
+                    }
+                   
+            
+

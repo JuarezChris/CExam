@@ -1,0 +1,88 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+    crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" media="screen" href="~/css/dojoStyle.css" />
+@model Active
+@using Dojo_Activity.Models
+<div id="wrapper">
+    <h1>Welcome to the Dojo Activity Center!</h1>
+    <h1>Welcome, @ViewBag.name.FirstName</h1>
+    <a class="btn btn-primary" href="../logout">Log Off</a>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Activity</th>
+                <th scope="col">Date and Time</th>
+                <th scope="col">Duration</th>
+                <th scope="col">Event Coordinator</th>
+                <th scope="col">Number of Participants</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+
+
+           
+           @foreach(var x in @ViewBag.activities)
+            {
+                bool going = false;
+            <tr>
+                <td><a href="../DisplayActivity/@x.ActivityId">@x.Title</a></td>
+                <td>@x.ActivityDate</td>
+                <td>@x.Duration @x.Hour</td>
+                @foreach(var z in @ViewBag.AllUsers)
+                {
+                    @if(z.UserId == x.ActivityPlanner)
+                    {
+                        <td>@z.FirstName</td>
+                    }
+                }
+                
+                <td>@x.JoinList.Count</td>
+                <td>
+                    
+                    @if(@x.ActivityPlanner == @ViewBag.User)
+                    {
+                    <form action="../Delete/@x.ActivityId" method="post">
+                        <button type="submit" class="btn btn-success">Delete</button>
+                    </form>
+                    }
+                    else
+                    {
+                         @foreach (var y in x.JoinList)
+                    {
+                        
+                        
+                        @if(@ViewBag.User == y.User.UserId)
+                        {
+                            going = true;
+                        }
+                    }
+                        @if(going == true)
+                        {
+                        <form action="../leave/@x.ActivityId" method="post">
+                        <button type="submit" class="btn btn-success">Leave</button>
+                        </form>
+                        }
+                        else
+                        {
+                        <form action="../join/@x.ActivityId/@ViewBag.User" method="post">
+                        <button type="submit" class="btn btn-success">Join</button>
+                        </form>
+                        }
+                    
+                        
+                    }
+                   
+                </td>
+            </tr>
+            }
+            
+
+
+        </tbody>
+    </table>
+</div>
+<a class="btn btn-primary" href="../newActivity">Add New Activity</a>
+
+</div>
