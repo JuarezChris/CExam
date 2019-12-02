@@ -1,18 +1,19 @@
 body{
     
-    background: url("~/images/activity.jpg")no-repeat center center fixed;
+    /* background: url("~/images/activity.jpg")no-repeat center center fixed;
     
     -webkit-background-size: cover;
  -moz-background-size: cover;
  -o-background-size: cover;
  background-size: cover;
- padding: 15px;
-
+ padding: 15px; */
+ background-color: #3f3f3f;
  padding-top: 50px;
  padding-bottom: 20px;
 }
 #wrapper{
     margin: auto;
+    background-color: #3f3f3f;
 }
 .box1{
     border-radius: 25px;
